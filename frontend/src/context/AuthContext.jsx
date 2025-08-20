@@ -1,3 +1,4 @@
+// frontend/context/AuthContext.jsx
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -28,8 +29,9 @@ export const AuthProvider = ({ children }) => {
     setUser(res.data.user)
   }
 
-  const register = async (username, email, password) => {
-    const res = await axios.post('/api/users/register', { username, email, password })
+  // 👇 FIXED ORDER: (email, password, username, role)
+  const register = async (email, password, username, role = 'reader') => {
+    const res = await axios.post('/api/users/register', { email, password, username, role })
     setToken(res.data.token)
     localStorage.setItem('token', res.data.token)
     setUser(res.data.user)
