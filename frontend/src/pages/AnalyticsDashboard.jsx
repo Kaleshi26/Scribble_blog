@@ -1,5 +1,4 @@
-
-
+// frontend/src/pages/AnalyticsDashboard.jsx
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
