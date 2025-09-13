@@ -1,4 +1,4 @@
-
+// frontend/src/pages/PostDetail.jsx
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
