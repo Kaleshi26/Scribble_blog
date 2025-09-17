@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 export const getAISuggestions = async (req, res) => {
