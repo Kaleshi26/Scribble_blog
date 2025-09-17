@@ -1,4 +1,4 @@
-
+// backend/models/Analytics.js
 import mongoose from 'mongoose';
 
 const analyticsSchema = new mongoose.Schema({
