@@ -1,4 +1,4 @@
-
+// backend/controllers/aiController.js
 import axios from 'axios';
 
 export const getAISuggestions = async (req, res) => {
