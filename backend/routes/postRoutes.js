@@ -1,4 +1,4 @@
-
+// backend/routes/postRoutes.js
 import express from 'express';
 import multer from 'multer';
 import { createPost, getPosts, getPost, updatePost, likePost } from '../controllers/postController.js';
