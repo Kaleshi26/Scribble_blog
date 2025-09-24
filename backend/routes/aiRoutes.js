@@ -1,3 +1,4 @@
+
 import express from 'express';
 import { getAISuggestions } from '../controllers/aiController.js';
 import auth from '../middleware/auth.js';
