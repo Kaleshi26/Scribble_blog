@@ -1,40 +1,120 @@
-# Scribble Blog
+# 🎉 Scribble Blog
 
-A modern, full‑stack blogging platform with authentication, rich content, real‑time interactions, AI suggestions, analytics, and payments.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-20-green)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-19.0.0-blue)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6.0-green)](https://www.mongodb.com/)
 
-## Features
-- Authentication: JWT, refresh tokens, Google OAuth (planned UI), role-based access
-- Posts: drafts, publish, tags, categories, images, bookmarks, likes, slugs, SEO, reading time
-- Comments: threaded replies, likes, edit/delete, live updates via Socket.IO
-- AI: content suggestions via Hugging Face API with graceful fallback
-- Analytics: views, engagement (likes/comments/bookmarks/shares), monthly/daily trends
-- Notifications: in-app + (optional) email
-- Search: full-text search, suggestions, popular tags/categories
-- Payments: Stripe one-off payments and subscriptions (webhooks included)
-- File uploads: Multer + static serving
-- Security: Helmet, CORS, rate limiting, XSS/NoSQL sanitization, HPP
-- Frontend: React + Vite, Tailwind CSS, Framer Motion, React Query, Toasts
+A modern, full‑stack blogging platform featuring authentication, rich content, real‑time interactions, AI suggestions, analytics, and payments.
 
-## Tech Stack
-- Backend: Node.js, Express, Mongoose/MongoDB, Socket.IO, Stripe, Nodemailer
-- Frontend: React 19, Vite, Tailwind CSS, React Router, React Query, Framer Motion
-- Tooling: ESLint, Nodemon, Vitest (+ RTL), Chart.js
+---
 
-## Monorepo Structure
-```
+## 📚 Table of Contents
+- [Features](#-features)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Monorepo Structure](#%EF%B8%8F-monorepo-structure)
+- [Environment Variables](#%EF%B8%8F-environment-variables)
+- [Install & Run Locally](#-install--run-locally)
+- [API Overview](#-api-overview)
+- [Frontend Highlights](#-frontend-highlights)
+- [Real-time (SocketIO)](#-real-time-socketio)
+- [Stripe Setup](#-stripe-setup)
+- [AI Suggestions](#-ai-suggestions)
+- [Security & Best Practices](#%EF%B8%8F-security--best-practices)
+- [Testing](#-testing)
+- [Deployment Notes](#-deployment-notes)
+- [Roadmap](#-roadmap)
+- [License](#-license)
+
+---
+
+## 🚀 Features
+
+### 🔐 Authentication
+- JWT + Refresh Tokens
+- Google OAuth (planned UI)
+- Role-based access control (Reader / Author / Admin)
+
+### 📝 Posts
+- Drafts & publishing
+- Tags, categories, slugs, SEO, reading time
+- Bookmarks, likes, and shares
+- Images and rich media support
+
+### 💬 Comments
+- Threaded replies
+- Likes, edit/delete
+- Real-time updates via Socket.IO
+
+### 🤖 AI Suggestions
+- Hugging Face API for content generation
+- Graceful fallback to rule-based suggestions
+
+### 📊 Analytics
+- Views, engagement (likes/comments/bookmarks/shares)
+- Monthly & daily trends
+
+### 🔔 Notifications
+- In-app notifications
+- Optional email notifications
+
+### 🔍 Search
+- Full-text search
+- Suggestions, trending tags/categories
+
+### 💳 Payments
+- Stripe one-off payments & subscriptions
+- Webhooks included
+
+### 📁 File Uploads
+- Multer + static file serving
+
+### 🛡️ Security
+- Helmet CSP, rate limiting
+- XSS & NoSQL sanitization, HPP
+
+### 🎨 Frontend
+- React + Vite
+- Tailwind CSS
+- Framer Motion animations
+- React Query for data fetching
+- Toast notifications
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Node.js, Express, Mongoose, Socket.IO, Stripe, Nodemailer |
+| Frontend | React 19, Vite, Tailwind CSS, React Router, Framer Motion, React Query |
+| Tooling | ESLint, Nodemon, Vitest, Chart.js |
+
+---
+
+## 🗂️ Monorepo Structure
+
+```text
 Scribble_blog/
-  backend/
-    controllers/   middleware/   models/   routes/   services/   socket/
-    server.js
-  frontend/
-    src/ (components, pages, context, hooks, utils)
-    vite.config.js
+├─ backend/
+│  ├─ controllers/
+│  ├─ middleware/
+│  ├─ models/
+│  ├─ routes/
+│  ├─ services/
+│  ├─ socket/
+│  └─ server.js
+└─ frontend/
+   ├─ src/ (components, pages, context, hooks, utils)
+   └─ vite.config.js
 ```
 
-## Environment Variables
-Create a .env in backend/ using the template below. Do not commit secrets.
+---
 
-```
+## ⚙️ Environment Variables
+
+### Backend `.env`
+```bash
 # Database
 MONGO_URI=mongodb://localhost:27017/scribble_blog
 REDIS_URL=redis://localhost:6379
@@ -53,7 +133,7 @@ GOOGLE_CLIENT_SECRET=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 
-# Email (Nodemailer)
+# Email
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USER=
@@ -69,8 +149,8 @@ NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
 ```
 
-Frontend (.env) at frontend/:
-```
+### Frontend `.env`
+```bash
 VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
 VITE_STRIPE_PUBLISHABLE_KEY=
@@ -78,118 +158,129 @@ VITE_GOOGLE_CLIENT_ID=
 VITE_APP_NAME=Scribble Blog
 ```
 
-## Install & Run (Local)
-1) Backend
-```
+---
+
+## 🏁 Install & Run Locally
+
+### Backend
+```bash
 cd backend
 npm install
 npm run dev
 ```
-2) Frontend
-```
+
+### Frontend
+```bash
 cd frontend
 npm install
 npm run dev
 ```
-- Vite dev server runs at http://localhost:5173
-- API server runs at http://localhost:5000 (proxy configured)
 
-## NPM Scripts
-- Backend
-  - dev: start with nodemon
-  - start: node server.js
-  - test | test:watch | test:coverage: Jest tests (when added)
-- Frontend
-  - dev | build | preview | lint
-  - test | test:ui (Vitest)
+- Vite dev server: http://localhost:5173
+- API server: http://localhost:5000
 
-## API Overview
-Base URL: /api
+---
 
-- Auth/Users (/api/users)
-  - POST /register, POST /login, POST /google-auth
-  - GET /profile, PUT /profile
-  - POST /forgot-password, POST /reset-password
-  - GET /:username (public profile)
-  - POST/DELETE /:userId/follow, GET /:userId/followers, GET /:userId/following
+## 📜 API Overview
 
-- Posts (/api/posts)
-  - GET / (filter: tag, category, search, author, sort, page, limit)
-  - GET /trending, GET /featured
-  - GET /:id
-  - POST / (auth, multipart images)
-  - PUT /:id (auth, multipart images)
-  - DELETE /:id (auth)
-  - POST /:id/like (auth)
-  - POST /:id/bookmark (auth)
-  - GET /user/bookmarks (auth)
+Base URL: `/api`
 
-- Comments (/api/comments)
-  - GET /:postId (paginated)
-  - POST / (auth)
-  - PUT /:id (auth)
-  - DELETE /:id (auth/admin)
-  - POST /:id/like (auth)
+### Auth & Users (`/api/users`)
+- `POST /register`, `POST /login`, `POST /google-auth`
+- `GET /profile`, `PUT /profile`
+- Follow/unfollow: `POST /:userId/follow`, `DELETE /:userId/follow`
+- Public profile: `GET /:username`
 
-- AI (/api/ai)
-  - POST /suggest (auth)
+### Posts (`/api/posts`)
+- CRUD: `GET /`, `POST /`, `PUT /:id`, `DELETE /:id`
+- Likes & bookmarks: `POST /:id/like`, `POST /:id/bookmark`
+- Trending & featured: `GET /trending`, `GET /featured`
 
-- Payments (/api/payments)
-  - POST /create-payment-intent (auth)
-  - POST /create-subscription (auth)
-  - GET /subscription (auth)
-  - POST /cancel-subscription (auth)
-  - POST /webhook (Stripe webhook)
+### Comments (`/api/comments`)
+- `GET /:postId`, `POST /`, `PUT /:id`, `DELETE /:id`
+- Like: `POST /:id/like`
 
-- Notifications (/api/notifications)
-  - GET / (auth, paginated)
-  - GET /unread-count (auth)
-  - PUT /:id/read (auth)
-  - PUT /mark-all-read (auth)
-  - DELETE /:id (auth)
+### AI (`/api/ai`)
+- `POST /suggest`
 
-- Search (/api/search)
-  - GET /posts, GET /users
-  - GET /suggestions, GET /tags/popular, GET /categories/popular
+### Payments (`/api/payments`)
+- `POST /create-payment-intent`, `POST /create-subscription`
+- `GET /subscription`, `POST /cancel-subscription`
+- `POST /webhook`
 
-## Frontend Highlights
-- Global providers: AuthProvider, SocketProvider, QueryClientProvider
-- Pages: Home, SignIn, SignUp, Profile, Create/Edit Post, Post Detail, Analytics, Search, Favorites, Following, Notifications, Settings, Pricing, Admin
-- Components: modern header, buttons, inputs, loading spinner, error boundary
+### Notifications (`/api/notifications`)
+- `GET /`, `GET /unread-count`
+- `PUT /:id/read`, `PUT /mark-all-read`
+- `DELETE /:id`
+
+### Search (`/api/search`)
+- `GET /posts`, `GET /users`
+- `GET /suggestions`, `GET /tags/popular`, `GET /categories/popular`
+
+---
+
+## 🌟 Frontend Highlights
+- Global Providers: `AuthProvider`, `SocketProvider`, `QueryClientProvider`
+- Pages: Home, SignIn, SignUp, Profile, Create/Edit Post, Post Detail, Analytics, Search, Favorites, Notifications, Settings, Pricing, Admin
+- Components: Modern header, buttons, inputs, loading spinner, error boundary
 - Styling: Tailwind CSS + Framer Motion animations
 
-## Real-time (Socket.IO)
-- Connection initialized in backend/server.js and frontend SocketContext
-- Rooms: user_«id» for notifications, post_«id» for comments/typing/likes
+---
 
-## Stripe Setup
-- Set STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET
-- Expose webhook in development (e.g., `stripe listen --forward-to localhost:5000/api/payments/webhook`)
-- Frontend uses VITE_STRIPE_PUBLISHABLE_KEY
+## 🔗 Real-time (SocketIO)
+- Rooms: `user_{id}` for notifications, `post_{id}` for comments/typing/likes
+- Connection setup: `backend/server.js` + `frontend/src/context/SocketContext.jsx`
 
-## AI Suggestions
-- If HUGGINGFACE_API_KEY is absent, a simple rule-based fallback returns titles/outlines/keywords
+---
 
-## Security & Best Practices
+## 💳 Stripe Setup
+- Set `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET`
+- In development:
+
+```bash
+stripe listen --forward-to localhost:5000/api/payments/webhook
+```
+
+---
+
+## 🤖 AI Suggestions
+- Uses Hugging Face API
+- If missing API key, falls back to simple rule-based suggestions
+
+---
+
+## 🛡️ Security & Best Practices
 - Helmet CSP, rate limiter, XSS/NoSQL sanitize, HPP
 - Role-based route protection via middleware
-- Input validation via express-validator
-- Sensitive keys only via env vars
+- Input validation via `express-validator`
+- Sensitive keys managed via `.env`
 
-## Testing
-- Backend: Jest + Supertest (scaffolded in package.json)
+---
+
+## 🧪 Testing
+- Backend: Jest + Supertest
 - Frontend: Vitest + React Testing Library
 
-## Deployment Notes
+---
+
+## 🚀 Deployment Notes
 - Build frontend: `cd frontend && npm run build`
 - Serve backend: `cd backend && npm start`
-- Ensure env vars set in the deployment environment
-- Optionally run behind a reverse proxy (e.g., Nginx) with SSL
+- Use a reverse proxy (Nginx) with SSL for production
 
-## Roadmap
-- Rich text editor (UI), media management, admin moderation tools
-- Email templates, in-app inbox, push notifications
+---
+
+## 📈 Roadmap
+- Rich text editor UI
+- Media management
+- Admin moderation tools
+- Email templates & in-app inbox
+- Push notifications
 - Advanced analytics dashboards & exports
 
-## License
-MIT (customize as needed)
+---
+
+## 📝 License
+MIT License
+
+Made with ❤️ by the Scribble Blog Team
